@@ -1,0 +1,153 @@
+/**index.wxss 打卡记录页 · 水墨风**/
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 48rpx 48rpx 80rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 统计卡片 ---------- */
+
+.stats-card {
+  background: rgba(252, 249, 240, 0.72);
+  border: 1rpx solid rgba(47, 42, 38, 0.14);
+  border-radius: 12rpx;
+  padding: 44rpx 24rpx;
+  display: flex;
+  color: #2f2a26;
+  box-shadow: 0 8rpx 24rpx rgba(47, 42, 38, 0.06);
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-item + .stat-item {
+  border-left: 1rpx solid rgba(47, 42, 38, 0.12);
+}
+
+.stat-num {
+  font-size: 34rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
+.stat-label {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #8c857a;
+  letter-spacing: 4rpx;
+}
+
+/* ---------- 记事列表 ---------- */
+
+.section-title {
+  margin: 48rpx 8rpx 24rpx;
+  font-size: 28rpx;
+  color: #5a544c;
+  letter-spacing: 6rpx;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::after {
+  content: "";
+  flex: 1;
+  margin-left: 24rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  background: linear-gradient(90deg, rgba(47, 42, 38, 0.35), transparent);
+}
+
+.record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.record-item {
+  background: rgba(252, 249, 240, 0.6);
+  border: 1rpx solid rgba(47, 42, 38, 0.12);
+  border-radius: 10rpx;
+  padding: 30rpx 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #2f2a26;
+}
+
+.record-date {
+  font-size: 30rpx;
+  font-weight: 500;
+  letter-spacing: 2rpx;
+}
+
+.record-time {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #8c857a;
+}
+
+.record-duration {
+  font-size: 32rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  color: #a83a32;
+}
+
+/* ---------- 空状态 ---------- */
+
+.empty {
+  margin-top: 160rpx;
+  text-align: center;
+  color: #5a544c;
+}
+
+.empty-zen {
+  font-size: 160rpx;
+  line-height: 1;
+  color: rgba(47, 42, 38, 0.1);
+}
+
+.empty-text {
+  margin-top: 32rpx;
+  font-size: 30rpx;
+  letter-spacing: 6rpx;
+}
+
+.empty-tip {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #8c857a;
+  letter-spacing: 2rpx;
+}
+
+/* ---------- 清空按钮 ---------- */
+
+.clear-btn {
+  margin-top: 64rpx;
+  height: 88rpx;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 10rpx;
+  background: rgba(252, 249, 240, 0.5);
+  border: 2rpx solid rgba(168, 58, 50, 0.4);
+  color: #a83a32;
+  font-size: 28rpx;
+  letter-spacing: 6rpx;
+  text-indent: 6rpx;
+}

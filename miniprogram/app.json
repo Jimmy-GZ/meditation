@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/records/index"
+  ],
+  "window": {
+    "backgroundColor": "#f6f1e5",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#f6f1e5",
+    "navigationBarTitleText": "冥想打卡",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,136 @@
+/**components/ink-bg/index.wxss 水墨动态背景**/
+
+.ink-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* 宣纸底色，自上而下渐次加深 */
+  background: linear-gradient(180deg, #f6f1e5 0%, #f1ead9 55%, #e9e1cd 100%);
+}
+
+/* ---------- 远山（三重墨色，径向渐变叠出峰峦） ---------- */
+
+.range {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+}
+
+.range-far {
+  bottom: 60rpx;
+  height: 320rpx;
+  opacity: 0.3;
+  background:
+    radial-gradient(58% 100% at 12% 100%, #9aa9ae 99%, transparent 100%),
+    radial-gradient(46% 100% at 44% 100%, #9aa9ae 99%, transparent 100%),
+    radial-gradient(62% 100% at 86% 100%, #9aa9ae 99%, transparent 100%);
+}
+
+.range-mid {
+  bottom: 20rpx;
+  height: 250rpx;
+  opacity: 0.45;
+  background:
+    radial-gradient(52% 100% at 24% 100%, #74868f 99%, transparent 100%),
+    radial-gradient(44% 100% at 58% 100%, #74868f 99%, transparent 100%),
+    radial-gradient(58% 100% at 90% 100%, #74868f 99%, transparent 100%);
+}
+
+.range-near {
+  bottom: -30rpx;
+  height: 200rpx;
+  opacity: 0.62;
+  background:
+    radial-gradient(56% 100% at 8% 100%, #54666f 99%, transparent 100%),
+    radial-gradient(50% 100% at 48% 100%, #54666f 99%, transparent 100%),
+    radial-gradient(64% 100% at 88% 100%, #54666f 99%, transparent 100%);
+}
+
+/* ---------- 云雾（横向缓慢漂移） ---------- */
+
+.mist {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(244, 238, 226, 0.95), rgba(244, 238, 226, 0));
+}
+
+.mist-a {
+  left: -15%;
+  bottom: 150rpx;
+  width: 900rpx;
+  height: 260rpx;
+  animation: drift 46s ease-in-out infinite alternate;
+}
+
+.mist-b {
+  right: -20%;
+  bottom: 270rpx;
+  width: 1000rpx;
+  height: 300rpx;
+  animation: drift 58s ease-in-out infinite alternate-reverse;
+}
+
+.mist-c {
+  left: 8%;
+  bottom: 60rpx;
+  width: 820rpx;
+  height: 230rpx;
+  animation: drift 70s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-60rpx);
+  }
+  to {
+    transform: translateX(80rpx);
+  }
+}
+
+/* ---------- 墨点（袅袅上浮，如香烟明灭） ---------- */
+
+.mote {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(47, 42, 38, 0.22);
+  animation: rise 12s linear infinite;
+}
+
+.mote-1 { left: 12%; bottom: 34%; width: 8rpx;  height: 8rpx;  animation-delay: 0s;   animation-duration: 11s; }
+.mote-2 { left: 24%; bottom: 26%; width: 12rpx; height: 12rpx; animation-delay: 3s;   animation-duration: 14s; }
+.mote-3 { left: 38%; bottom: 36%; width: 6rpx;  height: 6rpx;  animation-delay: 6s;   animation-duration: 10s; }
+.mote-4 { left: 52%; bottom: 28%; width: 10rpx; height: 10rpx; animation-delay: 1.5s; animation-duration: 13s; }
+.mote-5 { left: 66%; bottom: 33%; width: 7rpx;  height: 7rpx;  animation-delay: 4.5s; animation-duration: 12s; }
+.mote-6 { left: 78%; bottom: 25%; width: 12rpx; height: 12rpx; animation-delay: 7.5s; animation-duration: 15s; }
+.mote-7 { left: 88%; bottom: 35%; width: 6rpx;  height: 6rpx;  animation-delay: 2.5s; animation-duration: 10s; }
+.mote-8 { left: 45%; bottom: 40%; width: 9rpx;  height: 9rpx;  animation-delay: 9s;   animation-duration: 12s; }
+
+@keyframes rise {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.55;
+  }
+  85% {
+    opacity: 0.08;
+  }
+  100% {
+    transform: translate(46rpx, -560rpx);
+    opacity: 0;
+  }
+}
+
+/* 尊重系统减弱动效设置 */
+@media (prefers-reduced-motion: reduce) {
+  .mist,
+  .mote {
+    animation: none;
+  }
+}

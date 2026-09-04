@@ -1,0 +1,23 @@
+/**app.wxss 冥想打卡 全局样式**/
+
+button {
+  background: initial;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button::after {
+  border: none;
+}
+
+page {
+  background: #f6f1e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #2f2a26;
+  /* 楷体优先，缺字体时回退宋体/衬线，保持书卷气 */
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "楷体", "Songti SC", "Noto Serif SC", serif;
+}

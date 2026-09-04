@@ -1,0 +1,46 @@
+<!--pages/records/index.wxml-->
+<view class="page">
+
+  <!-- 水墨动态背景 -->
+  <ink-bg />
+
+  <view class="content">
+
+    <view class="stats-card">
+      <view class="stat-item">
+        <view class="stat-num">{{totalDurationText}}</view>
+        <view class="stat-label">累计时长</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-num">{{count}}</view>
+        <view class="stat-label">打卡次数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-num">{{streakDays}}</view>
+        <view class="stat-label">连续天数</view>
+      </view>
+    </view>
+
+    <view class="section-title" wx:if="{{records.length > 0}}">打卡记事</view>
+
+    <view class="record-list" wx:if="{{records.length > 0}}">
+      <view class="record-item" wx:for="{{records}}" wx:key="id">
+        <view class="record-left">
+          <view class="record-date">{{item.dateText}}</view>
+          <view class="record-time">打卡于 {{item.timeText}}</view>
+        </view>
+        <view class="record-duration">{{item.durationText}}</view>
+      </view>
+    </view>
+
+    <view class="empty" wx:else>
+      <view class="empty-zen">空</view>
+      <view class="empty-text">尚无记事</view>
+      <view class="empty-tip">心之所向，素履以往</view>
+    </view>
+
+    <button class="clear-btn" wx:if="{{records.length > 0}}" bindtap="onClearAll">清空记事</button>
+
+  </view>
+
+</view>

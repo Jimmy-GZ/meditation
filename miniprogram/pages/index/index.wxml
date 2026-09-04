@@ -1,0 +1,70 @@
+<!--pages/index/index.wxml-->
+<view class="page">
+
+  <!-- 水墨动态背景 -->
+  <ink-bg />
+
+  <!-- 待机状态 -->
+  <view class="content" wx:if="{{state === 'idle'}}">
+    <view class="level-card">
+      <view class="seal">{{levelName}}</view>
+      <view class="level-sub">第{{levelNumText}}重</view>
+      <view class="total-label">累计冥想</view>
+      <view class="total-time">{{totalDurationText}}</view>
+      <view class="progress-bar">
+        <view class="progress-inner" style="width: {{progressPercent}}%;">
+          <view class="progress-dot"></view>
+        </view>
+      </view>
+      <view class="progress-text">{{nextText}}</view>
+    </view>
+
+    <view class="mode-title">择时入定</view>
+    <view class="mode-grid">
+      <view
+        wx:for="{{modeOptions}}"
+        wx:key="label"
+        class="mode-item {{selectedMode === index ? 'active' : ''}}"
+        data-index="{{index}}"
+        bindtap="onSelectMode"
+      >{{item.label}}</view>
+    </view>
+
+    <button class="start-btn" bindtap="onStartMeditation">开始冥想</button>
+    <view class="records-link" bindtap="onGoRecords">打卡记事 ›</view>
+  </view>
+
+  <!-- 冥想中状态 -->
+  <view class="content meditating" wx:else>
+    <view class="enso-wrap">
+      <view class="enso-halo"></view>
+      <view class="enso"></view>
+      <view class="enso-center">
+        <view class="timer">{{displayTime}}</view>
+        <view class="timer-label">{{timerTip}}</view>
+      </view>
+    </view>
+    <view class="poem">一呼一吸</view>
+    <button class="end-btn" bindtap="onEndMeditation">结束冥想</button>
+  </view>
+
+  <!-- 打卡完成弹层 -->
+  <view class="result-mask" wx:if="{{showResult}}">
+    <view class="result-card" catchtap="noop">
+      <view class="result-stamp">已记</view>
+      <view class="result-title">冥想完成</view>
+      <view class="result-divider"></view>
+      <view class="result-row">
+        <text class="result-label">本次时长</text>
+        <text class="result-value">{{resultDurationText}}</text>
+      </view>
+      <view class="result-row">
+        <text class="result-label">累计冥想</text>
+        <text class="result-value">{{newTotalText}}</text>
+      </view>
+      <view class="levelup" wx:if="{{levelUpName}}">{{levelUpName}}</view>
+      <button class="result-btn" bindtap="onCloseResult">好的</button>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,401 @@
+/**index.wxss 冥想主页 · 水墨风**/
+
+/* 墨色：浓 #2f2a26 / 中 #5a544c / 淡 #8c857a；朱砂 #a83a32；纸 #f6f1e5 */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 48rpx 48rpx 80rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 等级卡片（册页式） ---------- */
+
+.level-card {
+  background: rgba(252, 249, 240, 0.72);
+  border: 1rpx solid rgba(47, 42, 38, 0.14);
+  border-radius: 12rpx;
+  padding: 56rpx 48rpx 48rpx;
+  text-align: center;
+  color: #2f2a26;
+  box-shadow: 0 8rpx 24rpx rgba(47, 42, 38, 0.06);
+}
+
+/* 朱砂印章 */
+.seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 112rpx;
+  height: 112rpx;
+  padding: 0 16rpx;
+  box-sizing: border-box;
+  background: #a83a32;
+  color: #f6f1e5;
+  font-size: 40rpx;
+  font-weight: 700;
+  letter-spacing: 6rpx;
+  border-radius: 10rpx;
+  transform: rotate(-4deg);
+  box-shadow: 4rpx 6rpx 14rpx rgba(168, 58, 50, 0.3);
+}
+
+.level-sub {
+  margin-top: 20rpx;
+  font-size: 26rpx;
+  color: #8c857a;
+  letter-spacing: 4rpx;
+}
+
+.total-label {
+  margin-top: 40rpx;
+  font-size: 24rpx;
+  color: #8c857a;
+  letter-spacing: 6rpx;
+}
+
+.total-time {
+  margin-top: 12rpx;
+  font-size: 64rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+}
+
+/* 墨条进度 */
+.progress-bar {
+  margin-top: 44rpx;
+  height: 10rpx;
+  border-radius: 5rpx;
+  background: rgba(47, 42, 38, 0.12);
+  overflow: visible;
+}
+
+.progress-inner {
+  position: relative;
+  height: 100%;
+  border-radius: 5rpx;
+  background: linear-gradient(90deg, #5a544c, #2f2a26);
+  transition: width 0.4s ease;
+}
+
+.progress-dot {
+  position: absolute;
+  right: -9rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: #a83a32;
+}
+
+.progress-text {
+  margin-top: 24rpx;
+  font-size: 24rpx;
+  color: #8c857a;
+  letter-spacing: 2rpx;
+}
+
+/* ---------- 模式选择（纸签） ---------- */
+
+.mode-title {
+  margin: 56rpx 8rpx 24rpx;
+  font-size: 28rpx;
+  color: #5a544c;
+  letter-spacing: 6rpx;
+  display: flex;
+  align-items: center;
+}
+
+.mode-title::after {
+  content: "";
+  flex: 1;
+  margin-left: 24rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  background: linear-gradient(90deg, rgba(47, 42, 38, 0.35), transparent);
+}
+
+.mode-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.mode-item {
+  padding: 18rpx 34rpx;
+  border-radius: 8rpx;
+  background: rgba(252, 249, 240, 0.6);
+  border: 1rpx solid rgba(47, 42, 38, 0.18);
+  color: #5a544c;
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+  transition: all 0.2s ease;
+}
+
+.mode-item.active {
+  background: #2f2a26;
+  border-color: #2f2a26;
+  color: #f6f1e5;
+}
+
+/* ---------- 开始按钮（匾额式） ---------- */
+
+.start-btn {
+  margin-top: 72rpx;
+  height: 104rpx;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 12rpx;
+  background: #2f2a26;
+  color: #f6f1e5;
+  font-size: 34rpx;
+  font-weight: 600;
+  letter-spacing: 16rpx;
+  text-indent: 16rpx; /* 抵消末字间距，使文字视觉居中 */
+  box-shadow: 0 10rpx 24rpx rgba(47, 42, 38, 0.25);
+}
+
+.start-btn:active {
+  opacity: 0.85;
+}
+
+.records-link {
+  margin-top: 36rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #8c857a;
+  letter-spacing: 2rpx;
+}
+
+/* ---------- 冥想中（圆相） ---------- */
+
+.meditating {
+  align-items: center;
+  justify-content: center;
+}
+
+.enso-wrap {
+  position: relative;
+  width: 480rpx;
+  height: 480rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 墨晕底光 */
+.enso-halo {
+  position: absolute;
+  width: 460rpx;
+  height: 460rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(47, 42, 38, 0.1) 0%, rgba(47, 42, 38, 0.02) 60%, transparent 75%);
+  animation: halo-breathe 10s ease-in-out infinite;
+}
+
+/* 圆相墨圈：不规则圆周近似手绘笔触 */
+.enso {
+  position: absolute;
+  width: 420rpx;
+  height: 420rpx;
+  border: 9rpx solid rgba(47, 42, 38, 0.85);
+  border-radius: 47% 53% 50% 50% / 51% 49% 53% 47%;
+  animation: enso-breathe 10s ease-in-out infinite;
+}
+
+.enso-center {
+  position: relative;
+  text-align: center;
+  color: #2f2a26;
+}
+
+.timer {
+  font-size: 92rpx;
+  font-weight: 500;
+  letter-spacing: 4rpx;
+}
+
+.timer-label {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #8c857a;
+  letter-spacing: 4rpx;
+}
+
+@keyframes enso-breathe {
+  0% {
+    transform: scale(0.84);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.84);
+    opacity: 0.6;
+  }
+}
+
+@keyframes halo-breathe {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+}
+
+/* 竖排题字 */
+.poem {
+  position: absolute;
+  right: 64rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  letter-spacing: 18rpx;
+  font-size: 28rpx;
+  color: rgba(47, 42, 38, 0.35);
+}
+
+.end-btn {
+  margin-top: 96rpx;
+  width: 320rpx;
+  height: 92rpx;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 10rpx;
+  background: rgba(252, 249, 240, 0.6);
+  border: 2rpx solid rgba(47, 42, 38, 0.55);
+  color: #2f2a26;
+  font-size: 30rpx;
+  letter-spacing: 8rpx;
+  text-indent: 8rpx;
+}
+
+/* ---------- 打卡完成弹层（宣纸 + 盖章） ---------- */
+
+.result-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(47, 42, 38, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.result-card {
+  width: 600rpx;
+  box-sizing: border-box;
+  background: #faf6ec;
+  border: 1rpx solid rgba(47, 42, 38, 0.18);
+  border-radius: 12rpx;
+  padding: 56rpx 48rpx 48rpx;
+  text-align: center;
+  color: #2f2a26;
+}
+
+/* 打卡盖章 */
+.result-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96rpx;
+  height: 96rpx;
+  padding: 0 12rpx;
+  box-sizing: border-box;
+  background: #a83a32;
+  color: #faf6ec;
+  font-size: 34rpx;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+  border-radius: 8rpx;
+  transform: rotate(-6deg);
+  box-shadow: 3rpx 5rpx 12rpx rgba(168, 58, 50, 0.3);
+}
+
+.result-title {
+  margin-top: 24rpx;
+  font-size: 40rpx;
+  font-weight: 600;
+  letter-spacing: 8rpx;
+}
+
+.result-divider {
+  margin: 28rpx auto 8rpx;
+  width: 200rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  background: linear-gradient(90deg, transparent, rgba(47, 42, 38, 0.4), transparent);
+}
+
+.result-row {
+  margin-top: 22rpx;
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+}
+
+.result-label {
+  color: #8c857a;
+  letter-spacing: 2rpx;
+}
+
+.result-value {
+  font-weight: 600;
+}
+
+.levelup {
+  margin-top: 28rpx;
+  display: inline-block;
+  padding: 12rpx 32rpx;
+  border-radius: 8rpx;
+  background: #a83a32;
+  color: #faf6ec;
+  font-size: 28rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+}
+
+.result-btn {
+  margin-top: 44rpx;
+  height: 88rpx;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 10rpx;
+  background: #2f2a26;
+  color: #f6f1e5;
+  font-size: 30rpx;
+  font-weight: 600;
+  letter-spacing: 12rpx;
+  text-indent: 12rpx;
+}

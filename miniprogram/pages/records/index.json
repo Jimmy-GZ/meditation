@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "打卡记事",
+  "navigationBarBackgroundColor": "#f6f1e5",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#f6f1e5",
+  "usingComponents": {
+    "ink-bg": "/components/ink-bg/index"
+  }
+}

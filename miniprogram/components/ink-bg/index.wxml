@@ -1,0 +1,20 @@
+<!--components/ink-bg/index.wxml 水墨动态背景-->
+<view class="ink-bg">
+  <!-- 远山三重（淡墨、中墨、浓墨） -->
+  <view class="range range-far"></view>
+  <view class="range range-mid"></view>
+  <view class="range range-near"></view>
+  <!-- 云雾飘动 -->
+  <view class="mist mist-a"></view>
+  <view class="mist mist-b"></view>
+  <view class="mist mist-c"></view>
+  <!-- 上浮墨点 -->
+  <view class="mote mote-1"></view>
+  <view class="mote mote-2"></view>
+  <view class="mote mote-3"></view>
+  <view class="mote mote-4"></view>
+  <view class="mote mote-5"></view>
+  <view class="mote mote-6"></view>
+  <view class="mote mote-7"></view>
+  <view class="mote mote-8"></view>
+</view>
