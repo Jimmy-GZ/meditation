@@ -33,6 +33,7 @@ Page({
         dateText,
         timeText,
         durationText: formatDuration(r.duration),
+        note: r.note || "",
       };
     });
     this.setData({

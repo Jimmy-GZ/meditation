@@ -6,7 +6,8 @@
 //
 // 接口一览：
 //   getRecords()                              → 打卡记录数组（按时间倒序）
-//   addRecord({ duration, startTime, endTime }) → 写入一条打卡记录
+//   addRecord({ duration, startTime, endTime, note? }) → 写入一条打卡记录
+//   updateRecordNote(id, note)                → 给已保存的记录补写文字感想
 //   getStats()                                → { totalSeconds, count, streakDays }
 //   clearAll()                                → 清空所有打卡数据
 //   getSession() / saveSession() / clearSession() → 冥想会话的暂存与恢复
@@ -18,7 +19,7 @@ const SESSION_KEY = "meditation_session";
 
 /**
  * 获取全部打卡记录（按结束时间倒序）
- * @returns {Array<{id: string, duration: number, startTime: number, endTime: number}>}
+ * @returns {Array<{id: string, duration: number, startTime: number, endTime: number, note: string}>}
  */
 function getRecords() {
   let records = [];
@@ -35,8 +36,8 @@ function getRecords() {
 
 /**
  * 写入一条打卡记录
- * @param {{duration: number, startTime: number, endTime: number}} record
- *   duration 单位为秒，startTime/endTime 为毫秒时间戳
+ * @param {{duration: number, startTime: number, endTime: number, note?: string}} record
+ *   duration 单位为秒，startTime/endTime 为毫秒时间戳；note 为可选文字感想
  * @returns {object} 写入后的完整记录
  */
 function addRecord(record) {
@@ -45,6 +46,7 @@ function addRecord(record) {
     duration: Math.round(record.duration),
     startTime: record.startTime,
     endTime: record.endTime,
+    note: typeof record.note === "string" ? record.note.trim() : "",
   };
   const records = getRecords();
   records.unshift(fullRecord);
@@ -54,6 +56,27 @@ function addRecord(record) {
     console.error("setStorageSync failed", e);
   }
   return fullRecord;
+}
+
+/**
+ * 给已保存的打卡记录补写文字感想（冥想完成时先打卡、后按 id 补写）
+ * @param {string} id 记录 id
+ * @param {string} note 文字感想（会 trim；空串则清空感想）
+ * @returns {boolean} 是否找到并更新成功
+ */
+function updateRecordNote(id, note) {
+  if (!id) return false;
+  const records = getRecords();
+  const record = records.find((r) => r.id === id);
+  if (!record) return false;
+  record.note = typeof note === "string" ? note.trim() : "";
+  try {
+    wx.setStorageSync(RECORDS_KEY, records);
+  } catch (e) {
+    console.error("setStorageSync failed", e);
+    return false;
+  }
+  return true;
 }
 
 /**
@@ -148,6 +171,7 @@ function formatDay(date) {
 module.exports = {
   getRecords,
   addRecord,
+  updateRecordNote,
   getStats,
   clearAll,
   getSession,

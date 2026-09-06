@@ -63,7 +63,16 @@
         <text class="result-value">{{newTotalText}}</text>
       </view>
       <view class="levelup" wx:if="{{levelUpName}}">{{levelUpName}}</view>
-      <button class="result-btn" bindtap="onCloseResult">好的</button>
+      <textarea
+        class="result-note"
+        value="{{noteInput}}"
+        bindinput="onNoteInput"
+        placeholder="如有所感，留字于此（可空）"
+        placeholder-class="result-note-ph"
+        maxlength="200"
+        cursor-spacing="30"
+      ></textarea>
+      <button class="result-btn" bindtap="onSaveNote">保存</button>
     </view>
   </view>
 

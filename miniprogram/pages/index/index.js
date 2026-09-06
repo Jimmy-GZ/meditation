@@ -44,6 +44,7 @@ Page({
     resultDurationText: "",
     newTotalText: "",
     levelUpName: "",
+    noteInput: "",
   },
 
   onLoad() {
@@ -193,7 +194,12 @@ Page({
     storage.clearSession();
 
     const beforeLevel = getLevelInfo(storage.getStats().totalSeconds).current;
-    storage.addRecord({ duration: durationSeconds, startTime, endTime });
+    // 先打卡保存，感想文字之后可再补写（lastRecordId 供弹层「记下」使用）
+    this.lastRecordId = storage.addRecord({
+      duration: durationSeconds,
+      startTime,
+      endTime,
+    }).id;
     const stats = storage.getStats();
     const afterLevel = getLevelInfo(stats.totalSeconds).current;
 
@@ -204,6 +210,7 @@ Page({
       resultDurationText: formatDuration(durationSeconds),
       newTotalText: formatDuration(stats.totalSeconds),
       levelUpName: afterLevel.level > beforeLevel.level ? `晋级 · ${afterLevel.name}` : "",
+      noteInput: "",
     });
     if (isNaturalCountdown) {
       // 结束提醒：磬声 + 震动
@@ -221,8 +228,23 @@ Page({
     this.refreshStats();
   },
 
+  onNoteInput(e) {
+    this.setData({ noteInput: e.detail.value });
+  },
+
+  // 「保存」：把输入框文字（可能为空）写入本次打卡记录，再关闭弹层
+  onSaveNote() {
+    const note = (this.data.noteInput || "").trim();
+    if (this.lastRecordId) {
+      storage.updateRecordNote(this.lastRecordId, note);
+      if (note) wx.showToast({ title: "已记下", icon: "success" });
+    }
+    this.onCloseResult();
+  },
+
   onCloseResult() {
-    this.setData({ showResult: false });
+    this.lastRecordId = null;
+    this.setData({ showResult: false, noteInput: "" });
   },
 
   noop() {},
