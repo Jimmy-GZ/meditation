@@ -6,6 +6,7 @@
 
   <view class="content">
 
+    <!-- 统计卡（固定区） -->
     <view class="stats-card">
       <view class="stat-item">
         <view class="stat-num">{{totalDurationText}}</view>
@@ -21,28 +22,87 @@
       </view>
     </view>
 
-    <view class="section-title" wx:if="{{records.length > 0}}">打卡记事</view>
-
-    <view class="record-list" wx:if="{{records.length > 0}}">
-      <view class="record-item" wx:for="{{records}}" wx:key="id">
-        <view class="record-top">
-          <view class="record-left">
-            <view class="record-date">{{item.dateText}}</view>
-            <view class="record-time">打卡于 {{item.timeText}}</view>
-          </view>
-          <view class="record-duration">{{item.durationText}}</view>
-        </view>
-        <view class="record-note" wx:if="{{item.note}}">「{{item.note}}」</view>
+    <!-- 工具行：筛选 + 月份快速定位 -->
+    <view class="tl-tools" wx:if="{{hasRecords}}">
+      <view class="filter-row">
+        <view
+          class="filter-pill {{filter === 'all' ? 'on' : ''}}"
+          data-value="all"
+          bindtap="onChangeFilter"
+        >全部</view>
+        <view
+          class="filter-pill {{filter === 'noted' ? 'on' : ''}}"
+          data-value="noted"
+          bindtap="onChangeFilter"
+        >仅留字</view>
       </view>
+      <scroll-view
+        class="month-bar"
+        scroll-x
+        enhanced
+        show-scrollbar="{{false}}"
+        wx:if="{{months.length > 1}}"
+      >
+        <view
+          class="month-chip"
+          wx:for="{{months}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="onMonthTap"
+        >{{item.label}}</view>
+      </scroll-view>
     </view>
 
-    <view class="empty" wx:else>
-      <view class="empty-zen">空</view>
-      <view class="empty-text">尚无记事</view>
-      <view class="empty-tip">心之所向，素履以往</view>
-    </view>
+    <!-- 时间轴（可滚动区） -->
+    <scroll-view class="tl-scroll" scroll-y scroll-into-view="{{scrollIntoId}}" scroll-with-animation>
+      <view class="tl-inner">
+        <view class="tl-list" wx:if="{{sections.length > 0}}">
+          <!-- 每个月份为一个分区 -->
+          <view class="tl-section" wx:for="{{sections}}" wx:key="key" wx:for-item="section">
+            <view class="tl-month" id="h-{{section.key}}">
+              <text class="tl-month-text">{{section.label}}</text>
+              <text class="tl-month-count">{{section.count}} 次</text>
+            </view>
+            <!-- 节点：milestone 朱砂印章 / noted 实心墨点 / plain 空心墨圈 -->
+            <view
+              class="tl-item"
+              wx:for="{{section.nodes}}"
+              wx:key="id"
+              wx:for-item="node"
+            >
+              <view class="tl-marker {{node.milestone ? 'milestone' : (node.note ? 'noted' : 'plain')}}">{{node.milestone ? '晋' : ''}}</view>
+              <view class="tl-body">
+                <view class="tl-main">
+                  <view class="tl-info">
+                    <view class="tl-day">{{node.dayText}}</view>
+                    <view class="tl-time">打卡于 {{node.timeText}}</view>
+                  </view>
+                  <view class="tl-duration">{{node.durationText}}</view>
+                </view>
+                <view class="tl-badge" wx:if="{{node.milestone}}">晋级 · {{node.milestoneName}}</view>
+                <view class="tl-note" wx:if="{{node.note}}">「{{node.note}}」</view>
+              </view>
+            </view>
+          </view>
+        </view>
 
-    <button class="clear-btn" wx:if="{{records.length > 0}}" bindtap="onClearAll">清空记事</button>
+        <!-- 有记录但「仅留字」筛选为空 -->
+        <view class="empty" wx:elif="{{notedEmpty}}">
+          <view class="empty-zen">空</view>
+          <view class="empty-text">此间尚无留字</view>
+          <view class="empty-tip">言为心声，不妨记下几字</view>
+        </view>
+
+        <!-- 无任何记录 -->
+        <view class="empty" wx:else>
+          <view class="empty-zen">空</view>
+          <view class="empty-text">尚无记事</view>
+          <view class="empty-tip">心之所向，素履以往</view>
+        </view>
+
+        <button class="clear-btn" wx:if="{{hasRecords}}" bindtap="onClearAll">清空时间轴</button>
+      </view>
+    </scroll-view>
 
   </view>
 

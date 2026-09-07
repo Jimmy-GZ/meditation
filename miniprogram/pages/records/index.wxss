@@ -1,17 +1,20 @@
-/**index.wxss 打卡记录页 · 水墨风**/
+/**index.wxss 时间轴页 · 水墨风**/
+
+/* 墨色：浓 #2f2a26 / 中 #5a544c / 淡 #8c857a；朱砂 #a83a32；纸 #f6f1e5 */
 
 .page {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
 .content {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  height: 100vh;
   box-sizing: border-box;
-  padding: 48rpx 48rpx 80rpx;
+  padding: 48rpx 48rpx 0;
   display: flex;
   flex-direction: column;
 }
@@ -19,10 +22,11 @@
 /* ---------- 统计卡片 ---------- */
 
 .stats-card {
+  flex-shrink: 0;
   background: rgba(252, 249, 240, 0.72);
   border: 1rpx solid rgba(47, 42, 38, 0.14);
   border-radius: 12rpx;
-  padding: 44rpx 24rpx;
+  padding: 40rpx 24rpx;
   display: flex;
   color: #2f2a26;
   box-shadow: 0 8rpx 24rpx rgba(47, 42, 38, 0.06);
@@ -38,82 +42,215 @@
 }
 
 .stat-num {
-  font-size: 34rpx;
+  font-size: 32rpx;
   font-weight: 600;
   letter-spacing: 2rpx;
 }
 
 .stat-label {
-  margin-top: 12rpx;
-  font-size: 24rpx;
+  margin-top: 10rpx;
+  font-size: 22rpx;
   color: #8c857a;
   letter-spacing: 4rpx;
 }
 
-/* ---------- 记事列表 ---------- */
+/* ---------- 工具行：筛选 + 月份定位 ---------- */
 
-.section-title {
-  margin: 48rpx 8rpx 24rpx;
-  font-size: 28rpx;
-  color: #5a544c;
-  letter-spacing: 6rpx;
-  display: flex;
-  align-items: center;
+.tl-tools {
+  flex-shrink: 0;
 }
 
-.section-title::after {
-  content: "";
-  flex: 1;
-  margin-left: 24rpx;
-  height: 3rpx;
-  border-radius: 2rpx;
-  background: linear-gradient(90deg, rgba(47, 42, 38, 0.35), transparent);
-}
-
-.record-list {
+.filter-row {
+  margin-top: 28rpx;
   display: flex;
-  flex-direction: column;
   gap: 20rpx;
 }
 
-.record-item {
+.filter-pill {
+  padding: 10rpx 34rpx;
+  border-radius: 8rpx;
   background: rgba(252, 249, 240, 0.6);
-  border: 1rpx solid rgba(47, 42, 38, 0.12);
-  border-radius: 10rpx;
-  padding: 30rpx 36rpx;
+  border: 1rpx solid rgba(47, 42, 38, 0.18);
+  color: #5a544c;
+  font-size: 26rpx;
+  letter-spacing: 2rpx;
+  transition: all 0.2s ease;
+}
+
+.filter-pill.on {
+  background: #2f2a26;
+  border-color: #2f2a26;
+  color: #f6f1e5;
+}
+
+.month-bar {
+  margin-top: 20rpx;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.month-chip {
+  display: inline-block;
+  padding: 8rpx 26rpx;
+  margin-right: 16rpx;
+  border-radius: 6rpx;
+  background: rgba(47, 42, 38, 0.06);
+  color: #5a544c;
+  font-size: 24rpx;
+  letter-spacing: 1rpx;
+}
+
+.month-chip:last-child {
+  margin-right: 0;
+}
+
+/* ---------- 时间轴 ---------- */
+
+.tl-scroll {
+  flex: 1;
+  min-height: 0;
+  margin-top: 4rpx;
+}
+
+.tl-inner {
+  padding: 0 0 120rpx;
+}
+
+/* 左侧贯穿的细墨线 */
+.tl-list {
+  position: relative;
+  padding: 8rpx 0 16rpx;
+}
+
+.tl-list::before {
+  content: "";
+  position: absolute;
+  left: 11rpx;
+  top: 12rpx;
+  bottom: 8rpx;
+  width: 3rpx;
+  border-radius: 2rpx;
+  background: rgba(47, 42, 38, 0.16);
+}
+
+/* 月份分区标题（锚点） */
+.tl-month {
+  display: flex;
+  align-items: baseline;
+  gap: 18rpx;
+  padding: 30rpx 0 18rpx 76rpx;
+}
+
+.tl-month-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
   color: #2f2a26;
 }
 
-.record-top {
+.tl-month-count {
+  font-size: 22rpx;
+  letter-spacing: 2rpx;
+  color: #8c857a;
+}
+
+/* 节点条目 */
+.tl-item {
+  position: relative;
+  padding: 0 0 44rpx 76rpx;
+}
+
+/* 节点标记（三种形态） */
+.tl-marker {
+  position: absolute;
+  left: 0;
+  top: 8rpx;
+  width: 26rpx;
+  height: 26rpx;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+/* 普通节点：空心墨圈 */
+.tl-marker.plain {
+  border: 4rpx solid rgba(47, 42, 38, 0.5);
+  background: rgba(246, 241, 229, 0.9);
+}
+
+/* 留字节点：实心墨点 */
+.tl-marker.noted {
+  background: #2f2a26;
+}
+
+/* 里程碑节点：朱砂印章 */
+.tl-marker.milestone {
+  top: 0;
+  left: -10rpx;
+  width: 46rpx;
+  height: 46rpx;
+  border-radius: 6rpx;
+  background: #a83a32;
+  color: #f6f1e5;
+  letter-spacing: 2rpx;
+  transform: rotate(-6deg);
+  box-shadow: 3rpx 5rpx 10rpx rgba(168, 58, 50, 0.28);
+}
+
+.tl-body {
+  min-width: 0;
+}
+
+.tl-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.record-date {
+.tl-day {
   font-size: 30rpx;
   font-weight: 500;
   letter-spacing: 2rpx;
+  color: #2f2a26;
 }
 
-.record-time {
-  margin-top: 8rpx;
-  font-size: 24rpx;
+.tl-time {
+  margin-top: 6rpx;
+  font-size: 22rpx;
   color: #8c857a;
+  letter-spacing: 1rpx;
 }
 
-.record-duration {
+.tl-duration {
   font-size: 32rpx;
   font-weight: 600;
   letter-spacing: 2rpx;
   color: #a83a32;
 }
 
-/* 文字感想：细线分隔的浅墨批注 */
-.record-note {
-  margin-top: 20rpx;
-  padding-top: 18rpx;
-  border-top: 1rpx dashed rgba(47, 42, 38, 0.22);
+/* 里程碑章式标签 */
+.tl-badge {
+  margin-top: 16rpx;
+  display: inline-block;
+  padding: 6rpx 20rpx;
+  border-radius: 4rpx;
+  background: #a83a32;
+  color: #faf6ec;
+  font-size: 22rpx;
+  letter-spacing: 3rpx;
+  transform: rotate(-1deg);
+  box-shadow: 2rpx 3rpx 8rpx rgba(168, 58, 50, 0.2);
+}
+
+/* 文字感想批注 */
+.tl-note {
+  margin-top: 18rpx;
+  padding-top: 14rpx;
+  border-top: 1rpx dashed rgba(47, 42, 38, 0.2);
   font-size: 26rpx;
   line-height: 1.7;
   color: #5a544c;
@@ -125,7 +262,7 @@
 /* ---------- 空状态 ---------- */
 
 .empty {
-  margin-top: 160rpx;
+  margin-top: 120rpx;
   text-align: center;
   color: #5a544c;
 }

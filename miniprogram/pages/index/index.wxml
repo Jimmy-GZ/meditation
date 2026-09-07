@@ -31,7 +31,7 @@
     </view>
 
     <button class="start-btn" bindtap="onStartMeditation">开始冥想</button>
-    <view class="records-link" bindtap="onGoRecords">打卡记事 ›</view>
+    <view class="records-link" bindtap="onGoRecords">时间轴 ›</view>
   </view>
 
   <!-- 冥想中状态 -->
