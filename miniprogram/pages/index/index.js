@@ -62,6 +62,8 @@ Page({
     this.refreshStats();
     // 小程序被关闭后重新打开时，恢复进行中的冥想会话
     this.recoverSession();
+    // 云端同步完成后再刷新一次展示（本地写入始终即时，此处只处理云端合并结果）
+    storage.syncFromCloud(() => this.refreshStats());
   },
 
   onUnload() {

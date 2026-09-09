@@ -31,6 +31,8 @@ Page({
 
   onShow() {
     this.refresh();
+    // 云端同步完成后再刷新一次（本地读取始终即时，此处只处理云端合并结果）
+    storage.syncFromCloud(() => this.refresh());
   },
 
   /**
